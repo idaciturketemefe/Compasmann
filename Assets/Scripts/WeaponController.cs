@@ -1,10 +1,10 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class WeaponController : MonoBehaviour
 {
-    [Header("Ateþ Ayarlarý")]
+    [Header("AteÅŸ AyarlarÄ±")]
     [SerializeField] private GameObject bulletPrefab;
-    [SerializeField] private Transform firePoint; // Mermi çýkýþ noktasý
+    [SerializeField] private Transform firePoint; // Mermi Ã§Ä±kÄ±ÅŸ noktasÄ±
     [SerializeField] private float fireRate = 0.2f;
 
     private float fireTimer;
@@ -14,7 +14,7 @@ public class WeaponController : MonoBehaviour
     {
         mainCamera = Camera.main;
 
-        // FirePoint yoksa silahýn ucunu kullan
+        // FirePoint yoksa silahÄ±n ucunu kullan
         if (firePoint == null)
             firePoint = transform;
     }
@@ -23,7 +23,7 @@ public class WeaponController : MonoBehaviour
     {
         fireTimer -= Time.deltaTime;
 
-        // Sol týk basýlý tutunca ateþ et (Soul Knight stili auto-fire)
+        // Sol tÄ±k basÄ±lÄ± tutunca ateÅŸ et (Soul Knight stili auto-fire)
         if (Input.GetMouseButton(0) && fireTimer <= 0f)
         {
             Shoot();
@@ -33,20 +33,20 @@ public class WeaponController : MonoBehaviour
 
     void Shoot()
     {
-        // Mouse yönü
+        // Mouse yÃ¶nÃ¼
         Vector3 mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = 0f;
         Vector2 shootDirection = (mousePos - transform.position).normalized;
 
-        // Mermi oluþtur
+        // Mermi oluÅŸtur
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
 
-        // Mermiyi yönlendir
+        // Mermiyi yÃ¶nlendir
         Projectile proj = bullet.GetComponent<Projectile>();
         if (proj != null)
             proj.Setup(shootDirection);
 
-        // Mermiyi mouse yönüne döndür (görsel)
+        // Mermiyi mouse yÃ¶nÃ¼ne dÃ¶ndÃ¼r (gÃ¶rsel)
         float angle = Mathf.Atan2(shootDirection.y, shootDirection.x) * Mathf.Rad2Deg;
         bullet.transform.rotation = Quaternion.Euler(0, 0, angle);
     }
